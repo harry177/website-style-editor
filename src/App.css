@@ -1,0 +1,19 @@
+#root {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 calc(100% - 80px);
+  display: flex;
+}
+
+.workspace {
+  display: flex;
+  justify-content: center;
+  width: 85%;
+  height: 100%;
+  background-color: #d9d9d9;
+}
