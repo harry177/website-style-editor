@@ -22,3 +22,11 @@
   width: 100%;
   gap: 10px;
 }
+
+.menu-item__lower {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}

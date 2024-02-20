@@ -1,17 +1,9 @@
-import { MenuItem } from "../MenuItem/MenuItem";
+import { MenuItemRange } from "../MenuItemRange/MenuItemRange";
+import { MenuItemSelect } from "../MenuItemSelect/MenuItemSelect";
+import { MenuItemSwitcher } from "../MenuItemSwitcher/MenuItemSwitcher";
 import "./main-menu.css";
 
-const settings = [
-  "X",
-  "Y",
-  "Opacity",
-  "Scale",
-  "Blur",
-  "Speed",
-  "Delay",
-  "Easing",
-  "Delay",
-];
+const settings = ["X", "Y", "Opacity", "Scale", "Blur", "Speed", "Delay"];
 
 export const MainMenu = () => {
   return (
@@ -20,10 +12,16 @@ export const MainMenu = () => {
         {settings.map((item, key) => {
           return (
             <div key={key} className="menu-item">
-              <MenuItem item={item} />
+              <MenuItemRange item={item} />
             </div>
           );
         })}
+        <div className="menu-item__lower">
+          <MenuItemSelect />
+        </div>
+        <div className="menu-item__lower">
+          <MenuItemSwitcher />
+        </div>
       </div>
     </aside>
   );

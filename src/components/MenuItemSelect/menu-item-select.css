@@ -1,0 +1,22 @@
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  position: relative;
+  width: 65px;
+  background: url("/shevron-down.svg");
+  background-repeat: no-repeat;
+  background-size: 15%;
+  background-position: 100%;
+  font-size: 12px;
+}
+
+.menu-item__select-name {
+  display: flex;
+  justify-content: right;
+  width: 15%;
+  font-weight: 500;
+  font-size: 11px;
+  margin-left: 13px;
+}
