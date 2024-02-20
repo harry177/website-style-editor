@@ -7,6 +7,7 @@ export const PageText = ({ top, left, opacity }) => {
     height: 176,
     opacity: opacity,
     margin: 0,
+    lineHeight: 1.3,
     position: "absolute",
   };
   return (
