@@ -16,3 +16,20 @@
   height: 100%;
   background-color: #d9d9d9;
 }
+
+.selected-element {
+  border: none;
+  outline: none;
+}
+
+.selected-element::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid #3e87f8;
+  pointer-events: none;
+}
+
