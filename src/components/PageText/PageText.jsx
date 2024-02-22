@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 
-export const PageText = ({ top, left, opacity }) => {
+export const PageText = ({ top, left, opacity, scale, blur }) => {
   const dispatch = useDispatch();
   const elementState = useSelector((state) => state.element.result);
   const textStyle = {
     display: "inline-block",
     top: top,
     left: left,
+    opacity: opacity,
+    transform: `scale(${scale})`,
+    filter: `blur(${blur})`,
     width: 374,
     height: 176,
-    opacity: opacity,
     margin: 0,
     lineHeight: 1.3,
     position: "absolute",

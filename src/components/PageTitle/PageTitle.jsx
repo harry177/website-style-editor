@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 
-export const PageTitle = ({ top, left, opacity }) => {
+export const PageTitle = ({ top, left, opacity, scale, blur }) => {
   const dispatch = useDispatch();
   const elementState = useSelector((state) => state.element.result);
   const titleStyle = {
@@ -9,6 +9,8 @@ export const PageTitle = ({ top, left, opacity }) => {
     top: top,
     left: left,
     opacity: opacity,
+    transform: `scale(${scale})`,
+    filter: `blur(${blur})`,
     margin: 0,
     fontSize: 43,
     letterSpacing: -2,

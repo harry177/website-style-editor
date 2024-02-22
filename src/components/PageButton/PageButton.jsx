@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 
-export const PageButton = ({ top, left, opacity }) => {
+export const PageButton = ({ top, left, opacity, scale, blur }) => {
   const dispatch = useDispatch();
   const elementState = useSelector((state) => state.element.result);
   const buttonStyle = {
@@ -9,6 +9,8 @@ export const PageButton = ({ top, left, opacity }) => {
     top: top,
     left: left,
     opacity: opacity,
+    transform: `scale(${scale})`,
+    filter: `blur(${blur})`,
     width: 146,
     heugh: 51,
     color: "#ffffff",
