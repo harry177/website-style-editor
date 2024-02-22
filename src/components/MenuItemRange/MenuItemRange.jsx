@@ -1,13 +1,9 @@
 import "./menu-item-range.css";
-import { useState } from "react";
 
-export const MenuItemRange = ({ item }) => {
-  const [value, setValue] = useState(0);
+export const MenuItemRange = ({ item, register, watch }) => {
 
-  const handleChange = (event) => {
-    const newValue = parseInt(event.target.value);
-    setValue(newValue);
-  };
+  const value = watch(item);
+
 
   const splittedRangeStyle = (item) => {
     let selectedValue;
@@ -44,9 +40,9 @@ export const MenuItemRange = ({ item }) => {
       } else if (value < 0 && value > -10) {
         return "-0.".concat(value.toString().split("-").join(""));
       } else if (value <= -10) {
-        return value.toString().slice(0, 2) + "." + value.toString().slice(2);
+        return value && value.toString().slice(0, 2) + "." + value.toString().slice(2);
       } else {
-        return value.toString().split("").join(".");
+        return value && value.toString().split("").join(".");
       }
     }
     return value;
@@ -66,8 +62,9 @@ export const MenuItemRange = ({ item }) => {
         }
         max={item === "X" || item === "Y" ? 150 : item === "Opacity" ? 100 : 20}
         step={1}
-        value={value}
-        onChange={handleChange}
+       name={item}
+        {...register(item)}
+       
         className="menu-item__range"
         style={
           item === "Opacity" || item === "Speed" || item === "Delay"
