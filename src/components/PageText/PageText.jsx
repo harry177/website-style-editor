@@ -1,22 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 
-export const PageText = ({ top, left, opacity, scale, blur }) => {
+export const PageText = ({ top, left, opacity, scale, blur, speed, delay, dispatchEvent }) => {
   const dispatch = useDispatch();
   const elementState = useSelector((state) => state.element.result);
   const textStyle = {
     display: "inline-block",
-    top: top,
-    left: left,
-    opacity: opacity,
+    top,
+    left,
+    opacity,
     transform: `scale(${scale})`,
     filter: `blur(${blur})`,
+    color: "#000000",
     width: 374,
     height: 176,
     margin: 0,
     lineHeight: 1.3,
     position: "absolute",
     cursor: "pointer",
+    transition: `top ${speed}s, left ${speed}s, opacity ${speed}s, transform ${speed}s, filter ${speed}s`,
+    transitionDelay: `${delay}s`
   };
 
   const handleClick = (event) => {
@@ -24,12 +27,17 @@ export const PageText = ({ top, left, opacity, scale, blur }) => {
     dispatch(selectElement(event.target.getAttribute("data-name")));
   };
 
+  const handleTransitionEnd = (event) => {
+    event && dispatchEvent("text")
+  };
+
   return (
     <div
       style={textStyle}
       data-name="page-text"
       onClick={(event) => handleClick(event)}
-      className={elementState === "page-text" ? "selected-element" : ""}
+      onTransitionEnd={(event) => handleTransitionEnd(event)}
+      className={elementState === "page-text" ? "selected-element element" : "element"}
     >
       The user should have the option to select any element on the page and set
       up its animation using the controls in the right panel. A dotted line will

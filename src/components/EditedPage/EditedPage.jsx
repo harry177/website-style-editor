@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { PageButton } from "../PageButton/PageButton";
 import { PageImage } from "../PageImage.jsx/PageImage";
 import { PageText } from "../PageText/PageText";
@@ -9,12 +10,42 @@ import "./edited-page.css";
 
 export const EditedPage = () => {
   const dispatch = useDispatch();
+  const [event, setEvent] = useState("");
 
   const condition = useSelector((state) => state.element.result);
   const formResult = useSelector((state) => state.form.formData);
 
-  console.log(formResult.Y);
-  console.log(typeof formResult.Y);
+  useEffect(() => {
+  const editedPage = document.querySelector(".edited-page");
+  const elements = editedPage.querySelectorAll(".element");
+  
+
+  const editedPageRect = editedPage.getBoundingClientRect();
+  const editedPageLeft = editedPageRect.left;
+  const editedPageRight = editedPageRect.left + editedPage.clientWidth;
+  const editedPageTop = editedPageRect.top;
+  const editedPageBottom = editedPageRect.top + editedPage.clientHeight;
+
+  elements.forEach((element) => {
+    const rect = element.getBoundingClientRect();
+
+    if (
+      rect.left < editedPageLeft ||
+      rect.right > editedPageRight ||
+      rect.top < editedPageTop ||
+      rect.bottom > editedPageBottom
+    ) {
+      element.classList.add("error-element");
+      
+    } else {
+      element.classList.remove("error-element");
+    }
+  });
+}, [formResult, event, condition]);
+
+const handleEvent = (event) => {
+  setEvent(event);
+}
 
   return (
     <div className="edited-page" onClick={() => dispatch(selectElement(""))}>
@@ -30,6 +61,9 @@ export const EditedPage = () => {
             : 1
         }
         blur={condition === "page-title" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
+        speed={condition === "page-title" && formResult.Speed > 0 ? formResult.Speed : 0}
+        delay={condition === "page-title" && formResult.Delay > 0 ? formResult.Delay : 0}
+        dispatchEvent={handleEvent}
       />
       <PageText
         top={condition === "page-text" ? +formResult.Y + 170 : 170}
@@ -43,6 +77,9 @@ export const EditedPage = () => {
             : 1
         }
         blur={condition === "page-text" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
+        speed={condition === "page-text" && formResult.Speed > 0 ? formResult.Speed : 0}
+        delay={condition === "page-text" && formResult.Delay > 0 ? formResult.Delay : 0}
+        dispatchEvent={handleEvent}
       />
       <PageButton
         top={condition === "page-button" ? +formResult.Y + 350 : 350}
@@ -56,10 +93,13 @@ export const EditedPage = () => {
             : 1
         }
         blur={condition === "page-button" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
+        speed={condition === "page-button" && formResult.Speed > 0 ? formResult.Speed : 0}
+        delay={condition === "page-button" && formResult.Delay > 0 ? formResult.Delay : 0}
+        dispatchEvent={handleEvent}
       />
       <PageImage
-        top={condition === "page-image" ? formResult.Y + 73 : 73}
-        left={condition === "page-image" ? formResult.X + 504 : 504}
+        top={condition === "page-image" ? +formResult.Y + 73 : 73}
+        left={condition === "page-image" ? +formResult.X + 504 : 504}
         opacity={
           condition === "page-image" ? (+formResult.Opacity / 100) * 1 : 1
         }
@@ -69,6 +109,9 @@ export const EditedPage = () => {
             : 1
         }
         blur={condition === "page-image" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
+        speed={condition === "page-image" && formResult.Speed > 0 ? formResult.Speed : 0}
+        delay={condition === "page-image" && formResult.Delay > 0 ? formResult.Delay : 0}
+        dispatchEvent={handleEvent}
       />
     </div>
   );
