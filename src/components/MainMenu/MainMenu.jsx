@@ -40,7 +40,7 @@ export const MainMenu = () => {
           );
         })}
         <div className="menu-item__lower">
-          <MenuItemSelect />
+          <MenuItemSelect register={register} />
         </div>
         <div className="menu-item__lower">
           <MenuItemSwitcher />

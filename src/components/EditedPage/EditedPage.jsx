@@ -63,6 +63,7 @@ const handleEvent = (event) => {
         blur={condition === "page-title" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
         speed={condition === "page-title" && formResult.Speed > 0 ? formResult.Speed : 0}
         delay={condition === "page-title" && formResult.Delay > 0 ? formResult.Delay : 0}
+        easing={condition === "page-title" && formResult.easing === "Ease-in" ? "ease-in" : formResult.easing === "Ease-out" ? "ease-out" : "ease-in-out"}
         dispatchEvent={handleEvent}
       />
       <PageText
@@ -79,6 +80,7 @@ const handleEvent = (event) => {
         blur={condition === "page-text" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
         speed={condition === "page-text" && formResult.Speed > 0 ? formResult.Speed : 0}
         delay={condition === "page-text" && formResult.Delay > 0 ? formResult.Delay : 0}
+        easing={condition === "page-text" && formResult.easing === "Ease-in" ? "ease-in" : formResult.easing === "Ease-out" ? "ease-out" : "ease-in-out"}
         dispatchEvent={handleEvent}
       />
       <PageButton
@@ -95,6 +97,7 @@ const handleEvent = (event) => {
         blur={condition === "page-button" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
         speed={condition === "page-button" && formResult.Speed > 0 ? formResult.Speed : 0}
         delay={condition === "page-button" && formResult.Delay > 0 ? formResult.Delay : 0}
+        easing={condition === "page-button" && formResult.easing === "Ease-in" ? "ease-in" : formResult.easing === "Ease-out" ? "ease-out" : "ease-in-out"}
         dispatchEvent={handleEvent}
       />
       <PageImage
@@ -111,6 +114,7 @@ const handleEvent = (event) => {
         blur={condition === "page-image" && formResult.Blur > 0 ? formResult.Blur + "px" : 0}
         speed={condition === "page-image" && formResult.Speed > 0 ? formResult.Speed : 0}
         delay={condition === "page-image" && formResult.Delay > 0 ? formResult.Delay : 0}
+        easing={condition === "page-image" && formResult.easing === "Ease-in" ? "ease-in" : formResult.easing === "Ease-out" ? "ease-out" : "ease-in-out"}
         dispatchEvent={handleEvent}
       />
     </div>

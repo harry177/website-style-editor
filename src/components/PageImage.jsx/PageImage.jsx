@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 
-export const PageImage = ({ top, left, opacity, scale, blur, speed, delay, dispatchEvent}) => {
+export const PageImage = ({ top, left, opacity, scale, blur, speed, delay, easing, dispatchEvent }) => {
   const dispatch = useDispatch();
   const elementState = useSelector((state) => state.element.result);
   const imageStyle = {
@@ -16,7 +16,8 @@ export const PageImage = ({ top, left, opacity, scale, blur, speed, delay, dispa
     position: "absolute",
     cursor: "pointer",
     transition: `top ${speed}s, left ${speed}s, opacity ${speed}s, transform ${speed}s, filter ${speed}s`,
-    transitionDelay: `${delay}s`
+    transitionDelay: `${delay}s`,
+    transitionTimingFunction: easing
   };
 
   const handleClick = (event) => {

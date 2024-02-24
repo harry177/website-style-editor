@@ -9,6 +9,7 @@ export const PageTitle = ({
   blur,
   speed,
   delay,
+  easing,
   dispatchEvent,
 }) => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export const PageTitle = ({
     cursor: "pointer",
     transition: `top ${speed}s, left ${speed}s, opacity ${speed}s, transform ${speed}s, filter ${speed}s`,
     transitionDelay: `${delay}s`,
+    transitionTimingFunction: easing
   };
 
   const handleClick = (event) => {
