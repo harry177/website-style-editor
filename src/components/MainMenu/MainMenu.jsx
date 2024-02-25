@@ -1,15 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../../lib/slices/formSlice";
+import { addElement, updateElement } from "../../lib/slices/newFormSlice";
 import { MenuItemRange } from "../MenuItemRange/MenuItemRange";
 import { MenuItemSelect } from "../MenuItemSelect/MenuItemSelect";
 import { MenuItemSwitcher } from "../MenuItemSwitcher/MenuItemSwitcher";
 import "./main-menu.css";
+import { useEffect } from "react";
 
 const settings = ["X", "Y", "Opacity", "Scale", "Blur", "Speed", "Delay"];
 
 export const MainMenu = () => {
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       X: 0,
       Y: 0,
@@ -23,12 +24,35 @@ export const MainMenu = () => {
   const dispatch = useDispatch();
 
   const condition = useSelector((state) => state.element.result);
-  const formResult = useSelector((state) => state.form.formData);
-  console.log(formResult);
+  const newFormResult = useSelector((state) => state.newform.newFormData);
+
+  const choosenElement = newFormResult.find((elem) => elem.name === condition);
+
 
   const onSubmit = (data) => {
-    condition && dispatch(submitForm(data));
-  };
+
+  if (condition && newFormResult.length !== 0) {
+    if (!choosenElement) {
+      dispatch(addElement({ name: condition, data: data }));
+    } else {
+      dispatch(updateElement({ name: condition, data: data }));
+    }
+  } else {
+    dispatch(addElement({ name: condition, data: data }));
+  }
+};
+
+useEffect(() => {
+  choosenElement ? reset(choosenElement.data) : reset({X: 0,
+    Y: 0,
+    Opacity: 100,
+    Scale: 0,
+    Blur: 0,
+    Speed: 0,
+    Delay: 0});
+}, [condition])
+
+
   return (
     <aside className="main-menu">
       <form className="settings" onSubmit={handleSubmit(onSubmit)}>
