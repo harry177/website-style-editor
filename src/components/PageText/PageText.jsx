@@ -1,16 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
+import { setMarker } from "../../lib/slices/markerSlice";
+import { initialFormValues } from "../../shared/constants/formValue";
 
-export const PageText = ({ top, left, opacity, scale, blur, speed, delay, easing, dispatchEvent }) => {
+export const PageText = ({ dispatchEvent, computing }) => {
   const dispatch = useDispatch();
-  const elementState = useSelector((state) => state.element.result);
+  const marker = useSelector((state) => state.marker.marker);
+  const newFormResult = useSelector((state) => state.newform.newFormData);
+  const condition = useSelector((state) => state.element.result);
+  const elementName = "page-text";
+  const elementState =
+    condition === elementName
+      ? condition
+      : marker &&
+        newFormResult.filter((elem) => elem.name === elementName).length !== 0
+      ? newFormResult.filter((elem) => elem.name === elementName)[0].name
+      : initialFormValues;
+
   const textStyle = {
     display: "inline-block",
-    top,
-    left,
-    opacity,
-    transform: `scale(${scale})`,
-    filter: `blur(${blur})`,
+    top: computing(elementState).Y + 170,
+    left: computing(elementState).X + 80,
+    opacity: computing(elementState).Opacity,
+    transform: `scale(${
+      computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
+    })`,
+    filter: `blur(${computing(elementState).Blur}px)`,
     color: "#000000",
     width: 374,
     height: 176,
@@ -18,18 +33,19 @@ export const PageText = ({ top, left, opacity, scale, blur, speed, delay, easing
     lineHeight: 1.3,
     position: "absolute",
     cursor: "pointer",
-    transition: `top ${speed}s, left ${speed}s, opacity ${speed}s, transform ${speed}s, filter ${speed}s`,
-    transitionDelay: `${delay}s`,
-    transitionTimingFunction: easing
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
   };
 
   const handleClick = (event) => {
+    dispatch(setMarker(""));
     event.stopPropagation();
     dispatch(selectElement(event.target.getAttribute("data-name")));
   };
 
   const handleTransitionEnd = (event) => {
-    event && dispatchEvent("text")
+    event && dispatchEvent("text");
   };
 
   return (
@@ -38,7 +54,9 @@ export const PageText = ({ top, left, opacity, scale, blur, speed, delay, easing
       data-name="page-text"
       onClick={(event) => handleClick(event)}
       onTransitionEnd={(event) => handleTransitionEnd(event)}
-      className={elementState === "page-text" ? "selected-element element" : "element"}
+      className={
+        condition === "page-text" ? "selected-element element" : "element"
+      }
     >
       The user should have the option to select any element on the page and set
       up its animation using the controls in the right panel. A dotted line will

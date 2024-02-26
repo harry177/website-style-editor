@@ -1,39 +1,57 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
+import { setMarker } from "../../lib/slices/markerSlice";
+import { initialFormValues } from "../../shared/constants/formValue";
 
-export const PageImage = ({ top, left, opacity, scale, blur, speed, delay, easing, dispatchEvent }) => {
+export const PageImage = ({ dispatchEvent, computing }) => {
   const dispatch = useDispatch();
-  const elementState = useSelector((state) => state.element.result);
+  const marker = useSelector((state) => state.marker.marker);
+  const newFormResult = useSelector((state) => state.newform.newFormData);
+  const condition = useSelector((state) => state.element.result);
+  const elementName = "page-image";
+  const elementState =
+    condition === elementName
+      ? condition
+      : marker &&
+        newFormResult.filter((elem) => elem.name === elementName).length !== 0
+      ? newFormResult.filter((elem) => elem.name === elementName)[0].name
+      : initialFormValues;
+
   const imageStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    top,
-    left,
-    opacity,
-    transform: `scale(${scale})`,
-    filter: `blur(${blur})`,
+    top: computing(elementState).Y + 73,
+    left: computing(elementState).X + 504,
+    opacity: computing(elementState).Opacity,
+    transform: `scale(${
+      computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
+    })`,
+    filter: `blur(${computing(elementState).Blur}px)`,
     position: "absolute",
     cursor: "pointer",
-    transition: `top ${speed}s, left ${speed}s, opacity ${speed}s, transform ${speed}s, filter ${speed}s`,
-    transitionDelay: `${delay}s`,
-    transitionTimingFunction: easing
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
   };
 
   const handleClick = (event) => {
+    dispatch(setMarker(""));
     event.stopPropagation();
     dispatch(selectElement(event.target.getAttribute("data-name")));
   };
 
   const handleTransitionEnd = (event) => {
-    event && dispatchEvent("image")
+    event && dispatchEvent("image");
   };
 
   return (
     <div
       style={imageStyle}
       onTransitionEnd={(event) => handleTransitionEnd(event)}
-      className={elementState === "page-image" ? "selected-element element" : "element"}
+      className={
+        condition === "page-image" ? "selected-element element" : "element"
+      }
     >
       <img
         src="./image.jpg"

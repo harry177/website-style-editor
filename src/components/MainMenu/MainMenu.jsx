@@ -1,25 +1,20 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addElement, updateElement } from "../../lib/slices/newFormSlice";
+import { setMarker } from "../../lib/slices/markerSlice";
 import { MenuItemRange } from "../MenuItemRange/MenuItemRange";
 import { MenuItemSelect } from "../MenuItemSelect/MenuItemSelect";
 import { MenuItemSwitcher } from "../MenuItemSwitcher/MenuItemSwitcher";
+import { initialFormValues } from "../../shared/constants/formValue";
 import "./main-menu.css";
-import { useEffect } from "react";
+
 
 const settings = ["X", "Y", "Opacity", "Scale", "Blur", "Speed", "Delay"];
 
 export const MainMenu = () => {
   const { register, handleSubmit, watch, reset } = useForm({
-    defaultValues: {
-      X: 0,
-      Y: 0,
-      Opacity: 100,
-      Scale: 0,
-      Blur: 0,
-      Speed: 0,
-      Delay: 0,
-    },
+    defaultValues: initialFormValues
   });
   const dispatch = useDispatch();
 
@@ -33,23 +28,23 @@ export const MainMenu = () => {
 
   if (condition && newFormResult.length !== 0) {
     if (!choosenElement) {
+      dispatch(setMarker(""))
       dispatch(addElement({ name: condition, data: data }));
     } else {
+      dispatch(setMarker(""))
       dispatch(updateElement({ name: condition, data: data }));
     }
+  } else if (!condition && newFormResult.length !== 0) {
+    dispatch(setMarker("marker"))
   } else {
+    dispatch(setMarker("marker"))
     dispatch(addElement({ name: condition, data: data }));
   }
+  
 };
 
 useEffect(() => {
-  choosenElement ? reset(choosenElement.data) : reset({X: 0,
-    Y: 0,
-    Opacity: 100,
-    Scale: 0,
-    Blur: 0,
-    Speed: 0,
-    Delay: 0});
+  choosenElement ? reset(choosenElement.data) : reset(initialFormValues);
 }, [condition])
 
 
