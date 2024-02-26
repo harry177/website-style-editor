@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addElement, updateElement } from "../../lib/slices/newFormSlice";
 import { setMarker } from "../../lib/slices/markerSlice";
+import { toggleClick } from "../../lib/slices/clickSlice";
 import { MenuItemRange } from "../MenuItemRange/MenuItemRange";
 import { MenuItemSelect } from "../MenuItemSelect/MenuItemSelect";
 import { MenuItemSwitcher } from "../MenuItemSwitcher/MenuItemSwitcher";
@@ -25,6 +26,7 @@ export const MainMenu = () => {
 
 
   const onSubmit = (data) => {
+    dispatch(toggleClick((prev) => !prev));
 
   if (condition && newFormResult.length !== 0) {
     if (!choosenElement) {

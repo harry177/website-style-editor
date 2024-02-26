@@ -3,11 +3,11 @@ import { EditedPage } from "./components/EditedPage/EditedPage";
 import { MainMenu } from "./components/MainMenu/MainMenu";
 import "./App.css";
 
-
 function App() {
+  
   return (
     <>
-    <Header />
+      <Header />
       <main className="main">
         <section className="workspace">
           <EditedPage />

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 import { setMarker } from "../../lib/slices/markerSlice";
+import { toggleClick } from "../../lib/slices/clickSlice";
 import { initialFormValues } from "../../shared/constants/formValue";
 
 export const PageTitle = ({ dispatchEvent, computing }) => {
@@ -38,13 +39,14 @@ export const PageTitle = ({ dispatchEvent, computing }) => {
   };
 
   const handleClick = (event) => {
+    dispatch(toggleClick((prev) => !prev));
     dispatch(setMarker(""));
     event.stopPropagation();
     dispatch(selectElement(event.target.getAttribute("data-name")));
   };
 
   const handleTransitionEnd = (event) => {
-    event && dispatchEvent("title");
+    event && dispatchEvent(event);
   };
 
   return (

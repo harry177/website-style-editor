@@ -6,6 +6,7 @@ import { PageTitle } from "../PageTitle/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { selectElement } from "../../lib/slices/elementSlice";
 import { setMarker } from "../../lib/slices/markerSlice";
+import { toggleClick } from "../../lib/slices/clickSlice";
 import { scaleValue } from "../../shared/utils/scaleValue";
 import { initialFormValues } from "../../shared/constants/formValue";
 import "./edited-page.css";
@@ -17,6 +18,7 @@ export const EditedPage = () => {
   const condition = useSelector((state) => state.element.result);
   const newFormResult = useSelector((state) => state.newform.newFormData);
   const marker = useSelector((state) => state.marker.marker);
+  const click = useSelector((state) => state.click.click);
 
   useEffect(() => {
     const editedPage = document.querySelector(".edited-page");
@@ -38,13 +40,11 @@ export const EditedPage = () => {
         rect.bottom > editedPageBottom
       ) {
         element.classList.add("error-element");
-      } else if (!event && !marker) {
-        element.classList.remove("error-element");
       } else {
         element.classList.remove("error-element");
       }
     });
-  }, [event, condition, marker]);
+  }, [event, condition, marker, click]);
 
   const handleEvent = (event) => {
     setEvent(event);
@@ -79,6 +79,7 @@ export const EditedPage = () => {
   const resetPage = () => {
     dispatch(selectElement(""));
     dispatch(setMarker(""));
+    dispatch(toggleClick((prev) => !prev));
     setEvent("");
   };
 
