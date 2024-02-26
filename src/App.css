@@ -49,3 +49,6 @@
   pointer-events: none;
 }
 
+.element {
+  position: absolute;
+}

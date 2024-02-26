@@ -18,18 +18,24 @@ export const PageImage = ({ dispatchEvent, computing }) => {
       ? newFormResult.filter((elem) => elem.name === elementName)[0].name
       : initialFormValues;
 
+  const wrapperStyle = {
+    top: computing(elementState).Y + 73,
+    left: computing(elementState).X + 504,
+    transform: `scale(${
+      computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
+    })`,
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
+  };
+
   const imageStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    top: computing(elementState).Y + 73,
-    left: computing(elementState).X + 504,
     opacity: computing(elementState).Opacity,
-    transform: `scale(${
-      computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
-    })`,
     filter: `blur(${computing(elementState).Blur}px)`,
-    position: "absolute",
+    position: "relative",
     cursor: "pointer",
     transitionDuration: `${computing(elementState).Speed}s`,
     transitionDelay: `${computing(elementState).Delay}s`,
@@ -49,17 +55,18 @@ export const PageImage = ({ dispatchEvent, computing }) => {
 
   return (
     <div
-      style={imageStyle}
-      onTransitionEnd={(event) => handleTransitionEnd(event)}
       className={
         condition === "page-image" ? "selected-element element" : "element"
       }
+      style={wrapperStyle}
+      onClick={(event) => handleClick(event)}
+      onTransitionEnd={(event) => handleTransitionEnd(event)}
     >
       <img
         src="./image.jpg"
         alt="page image"
         data-name="page-image"
-        onClick={(event) => handleClick(event)}
+        style={imageStyle}
       ></img>
     </div>
   );

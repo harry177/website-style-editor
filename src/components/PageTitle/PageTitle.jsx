@@ -18,20 +18,26 @@ export const PageTitle = ({ dispatchEvent, computing }) => {
       ? newFormResult.filter((elem) => elem.name === elementName)[0].name
       : initialFormValues;
 
-  const titleStyle = {
-    display: "inline-block",
+  const wrapperStyle = {
     top: computing(elementState).Y + 90,
     left: computing(elementState).X + 80,
-    opacity: computing(elementState).Opacity,
     transform: `scale(${
       computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
     })`,
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
+  };
+
+  const titleStyle = {
+    display: "inline-block",
+    opacity: computing(elementState).Opacity,
     filter: `blur(${computing(elementState).Blur}px)`,
     color: "#000000",
     margin: 0,
     fontSize: 43,
     letterSpacing: -2,
-    position: "absolute",
+    position: "relative",
     cursor: "pointer",
     transitionDuration: `${computing(elementState).Speed}s`,
     transitionDelay: `${computing(elementState).Delay}s`,
@@ -50,18 +56,17 @@ export const PageTitle = ({ dispatchEvent, computing }) => {
   };
 
   return (
-    <>
-      <h1
-        style={titleStyle}
-        data-name="page-title"
-        onClick={(event) => handleClick(event)}
-        onTransitionEnd={(event) => handleTransitionEnd(event)}
-        className={
-          condition === "page-title" ? "selected-element element" : "element"
-        }
-      >
+    <div
+      className={
+        condition === "page-title" ? "selected-element element" : "element"
+      }
+      style={wrapperStyle}
+      onClick={(event) => handleClick(event)}
+      onTransitionEnd={(event) => handleTransitionEnd(event)}
+    >
+      <h1 style={titleStyle} data-name="page-title">
         Animation Settings
       </h1>
-    </>
+    </div>
   );
 };

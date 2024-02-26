@@ -18,21 +18,27 @@ export const PageText = ({ dispatchEvent, computing }) => {
       ? newFormResult.filter((elem) => elem.name === elementName)[0].name
       : initialFormValues;
 
-  const textStyle = {
-    display: "inline-block",
+  const wrapperStyle = {
     top: computing(elementState).Y + 170,
     left: computing(elementState).X + 80,
-    opacity: computing(elementState).Opacity,
     transform: `scale(${
       computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
     })`,
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
+  };
+
+  const textStyle = {
+    display: "inline-block",
+    opacity: computing(elementState).Opacity,
     filter: `blur(${computing(elementState).Blur}px)`,
     color: "#000000",
     width: 374,
     height: 176,
     margin: 0,
     lineHeight: 1.3,
-    position: "absolute",
+    position: "relative",
     cursor: "pointer",
     transitionDuration: `${computing(elementState).Speed}s`,
     transitionDelay: `${computing(elementState).Delay}s`,
@@ -52,19 +58,21 @@ export const PageText = ({ dispatchEvent, computing }) => {
 
   return (
     <div
-      style={textStyle}
-      data-name="page-text"
-      onClick={(event) => handleClick(event)}
-      onTransitionEnd={(event) => handleTransitionEnd(event)}
       className={
         condition === "page-text" ? "selected-element element" : "element"
       }
+      style={wrapperStyle}
+      onClick={(event) => handleClick(event)}
+      onTransitionEnd={(event) => handleTransitionEnd(event)}
     >
-      The user should have the option to select any element on the page and set
-      up its animation using the controls in the right panel. A dotted line will
-      show the element&apos;s position and state before the animation begins,
-      giving the user a clear idea of how the animation will appear. The preview
-      button on the top panel will open the result in a new tab.
+      <div style={textStyle} data-name="page-text">
+        The user should have the option to select any element on the page and
+        set up its animation using the controls in the right panel. A dotted
+        line will show the element&apos;s position and state before the
+        animation begins, giving the user a clear idea of how the animation will
+        appear. The preview button on the top panel will open the result in a
+        new tab.
+      </div>
     </div>
   );
 };

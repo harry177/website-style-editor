@@ -18,20 +18,26 @@ export const PageButton = ({ dispatchEvent, computing }) => {
       ? newFormResult.filter((elem) => elem.name === elementName)[0].name
       : initialFormValues;
 
-  const buttonStyle = {
-    display: "inline-block",
+  const wrapperStyle = {
     top: computing(elementState).Y + 350,
     left: computing(elementState).X + 80,
-    opacity: computing(elementState).Opacity,
     transform: `scale(${
       computing(elementState).Scale !== 0 ? computing(elementState).Scale : 1
     })`,
+    transitionDuration: `${computing(elementState).Speed}s`,
+    transitionDelay: `${computing(elementState).Delay}s`,
+    transitionTimingFunction: computing(elementState).Easing,
+  };
+
+  const buttonStyle = {
+    display: "inline-block",
+    opacity: computing(elementState).Opacity,
     filter: `blur(${computing(elementState).Blur}px)`,
     width: 146,
     color: "#ffffff",
     backgroundColor: "#3e87f8",
     border: "none",
-    position: "absolute",
+    position: "relative",
     cursor: "pointer",
     transitionDuration: `${computing(elementState).Speed}s`,
     transitionDelay: `${computing(elementState).Delay}s`,
@@ -50,16 +56,17 @@ export const PageButton = ({ dispatchEvent, computing }) => {
   };
 
   return (
-    <button
-      style={buttonStyle}
-      data-name="page-button"
-      onClick={(event) => handleClick(event)}
-      onTransitionEnd={(event) => handleTransitionEnd(event)}
+    <div
       className={
         condition === "page-button" ? "selected-element element" : "element"
       }
+      style={wrapperStyle}
+      onClick={(event) => handleClick(event)}
+      onTransitionEnd={(event) => handleTransitionEnd(event)}
     >
-      Button
-    </button>
+      <button style={buttonStyle} data-name="page-button">
+        Button
+      </button>
+    </div>
   );
 };
