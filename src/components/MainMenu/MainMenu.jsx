@@ -6,7 +6,6 @@ import { setMarker } from "../../lib/slices/markerSlice";
 import { toggleClick } from "../../lib/slices/clickSlice";
 import { MenuItemRange } from "../MenuItemRange/MenuItemRange";
 import { MenuItemSelect } from "../MenuItemSelect/MenuItemSelect";
-import { MenuItemSwitcher } from "../MenuItemSwitcher/MenuItemSwitcher";
 import { initialFormValues } from "../../shared/constants/formValue";
 import "./main-menu.css";
 
@@ -26,7 +25,7 @@ export const MainMenu = () => {
 
 
   const onSubmit = (data) => {
-    dispatch(toggleClick((prev) => !prev));
+    dispatch(toggleClick());
 
   if (condition && newFormResult.length !== 0) {
     if (!choosenElement) {
@@ -62,9 +61,6 @@ useEffect(() => {
         })}
         <div className="menu-item__lower">
           <MenuItemSelect register={register} />
-        </div>
-        <div className="menu-item__lower">
-          <MenuItemSwitcher />
         </div>
         <button type="submit" className="form-button">
           Preview

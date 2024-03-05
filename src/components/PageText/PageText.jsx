@@ -46,7 +46,7 @@ export const PageText = ({ dispatchEvent, computing }) => {
   };
 
   const handleClick = (event) => {
-    dispatch(toggleClick((prev) => !prev));
+    dispatch(toggleClick());
     dispatch(setMarker(""));
     event.stopPropagation();
     dispatch(selectElement(event.target.getAttribute("data-name")));
@@ -67,11 +67,10 @@ export const PageText = ({ dispatchEvent, computing }) => {
     >
       <div style={textStyle} data-name="page-text">
         The user should have the option to select any element on the page and
-        set up its animation using the controls in the right panel. A dotted
-        line will show the element&apos;s position and state before the
-        animation begins, giving the user a clear idea of how the animation will
-        appear. The preview button on the top panel will open the result in a
-        new tab.
+        set up its animation using the controls in the right panel. A frame
+        color around element can show current selection (blue) or wrong position
+        relative to page (red). The preview button on the top panel allow to
+        update element&apos;s state and launch animation of all elements.
       </div>
     </div>
   );

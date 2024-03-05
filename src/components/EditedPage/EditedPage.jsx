@@ -79,7 +79,7 @@ export const EditedPage = () => {
   const resetPage = () => {
     dispatch(selectElement(""));
     dispatch(setMarker(""));
-    dispatch(toggleClick((prev) => !prev));
+    dispatch(toggleClick());
     setEvent("");
   };
 

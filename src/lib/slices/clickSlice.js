@@ -6,11 +6,11 @@ const initialState = {
 
 
   const clickSlice = createSlice({
-    name: 'marker',
+    name: 'click',
     initialState,
     reducers: {
       toggleClick(state, action) {
-        state.click = action.payload;
+        state.click = !action.payload;
       },
     },
   });

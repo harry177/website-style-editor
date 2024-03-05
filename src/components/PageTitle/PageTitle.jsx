@@ -45,7 +45,7 @@ export const PageTitle = ({ dispatchEvent, computing }) => {
   };
 
   const handleClick = (event) => {
-    dispatch(toggleClick((prev) => !prev));
+    dispatch(toggleClick());
     dispatch(setMarker(""));
     event.stopPropagation();
     dispatch(selectElement(event.target.getAttribute("data-name")));
